@@ -115,6 +115,647 @@ src/App.css 편집
 }
 ```
 
+<br><hr><br>
 
+# 2. 컴포넌트(Component)
+
+src/Compo01.jsx 파일 작성
+
+```javascript
+//const 컴포넌트이름 = () => { }
+const Compo01 = () => {
+    //리턴되는 내용은 하나로 묶어서 처리
+    return(
+        <div>
+            <h2>첫 번째 컴포넌트</h2>
+        </div>
+    )
+}
+//export default 컴포넌트이름
+export default Compo01;
+```
+
+<br>
+
+src/Compo02.jsx 파일 작성
+
+```javascript
+//rafce 단축 명령
+import React from 'react'
+
+const Compo02 = () => {
+  return (
+    <div>
+        <h2>두 번째 컴포넌트</h2>
+    </div>
+  )
+}
+
+export default Compo02
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+//import 컴포넌트별칭 from '경로및/컴포넌트이름'
+import CompA from './Compo01'
+import CompB from './Compo02'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+      <CompB />
+    </div>
+  );
+}
+
+export default App
+```
+
+<br><hr><br>
+
+## 2-1. 사용자 정의 컴포넌트(User Define Component) = component
+
+src/components/Comp01.jsx 파일 작성
+
+```javascript
+import React from 'react';
+
+const Comp01 = () => {
+    const style={
+        color:'red',
+        background:'#666',
+        fontSize:'30px'
+    }
+    const name="김기태";
+    const nickname="리액트신";
+    const nick=""; 
+    return (
+        <div>
+            <h1 style={style}>세 번째 스타일 적용하기</h1>
+            <h2>나의 이름은 {name} 입니다.</h2>
+            <p>{name === '김기태' ? <span>김기태</span> : <span>김기태가 아닙니다.</span>}</p>
+            {nickname && <h2>김기태의 별명은 {nickname}</h2>}
+            {nick || <h2>별명이 없습니다.</h2>}
+        </div>
+    );
+}
+
+export default Comp01
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp01'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+    </div>
+  );
+}
+
+export default App
+```
+
+
+
+## 2-2. 속성(Properties) = props
+
+src/components/Student.jsx 파일 작성
+
+```javascript
+import React from 'react'
+
+const Student = (props) => {
+    return (
+        <div>
+            <h2>학번:{props.stu.no}</h2>
+            <h2>이름:{props.stu.name}</h2>
+            <h2>학과:{props.stu.dept}</h2>
+        </div>
+    )
+}
+
+export default Student
+```
+
+<br>
+
+src/components/Comp02.jsx 파일 작성
+
+```javascript
+import React from 'react'
+import Student from './Student'
+
+const Comp02 = () => {
+    const student1 = {
+        no: '1', name:'홍길동', dept:'컴정과'
+    }
+    const student2 = {
+        no: '2', name:'심청이', dept:'전자과'
+    }
+    const student3 = {
+        no: '3', name:'김기태', dept:'통신과'
+    }
+    return (
+        <div>
+            <Student stu={student1}/>
+            <hr/>
+            <Student stu={student2}/>
+            <hr/>
+            <Student stu={student3}/>
+        </div>
+    )
+}
+
+export default Comp02
+```
+
+<br>
+
+src/components/Comp03.jsx 파일 작성
+
+```javascript
+import React from 'react'
+import Student from './Student'
+
+const Comp03 = () => {
+    const students=[
+        {no: '1', name:'홍길동', dept:'컴정과'},
+        {no: '2', name:'심청이', dept:'전자과'},
+        {no: '3', name:'김기태', dept:'통신과'}
+    ]
+    return (
+        <div>
+            <h1>배열 출력</h1>
+            {students.map(s=>
+                <Student stu={s} />
+            )}
+        </div>
+    )
+}
+
+export default Comp03
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp02'
+import CompB from './components/Comp03'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+      <CompB />
+    </div>
+  );
+}
+```
+
+<br>
+
+src/components/Product.jsx 파일 작성
+
+```javascript
+import React from 'react'
+
+const Product = (props) => {
+  return (
+        <tr>
+            <td>{props.pro.no}</td>
+            <td>{props.pro.name}</td>
+            <td>{props.pro.price}</td>
+        </tr>
+  )
+}
+
+export default Product
+```
+
+<br>
+
+src/components/Comp04.jsx 파일 작성
+
+```javascript
+import React from 'react'
+import Product from './Product'
+
+const Comp04 = () => {
+    const products=[
+        {no: '1', name:'새우깡', price:500},
+        {no: '2', name:'꿀꽈배기', price:800},
+        {no: '3', name:'문어깡', price:700}
+    ]
+  return (
+    <div>
+        <h1>상품 목록</h1>
+        <table>
+          <thead>
+            <tr>
+              <th>번호</th><th>상품명</th><th>가격</th>
+            </tr>
+          </thead>
+          <tbody>
+              {products.map(s=>
+                  <Product key={s.no} pro={s} />
+              )}
+          </tbody>
+        </table>
+    </div>
+  )
+}
+
+export default Comp04
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp04'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+    </div>
+  );
+}
+```
+
+
+<br><hr><br>
+
+
+## 2-3. 상태(State) = state
+
+<br>
+
+src/components/Comp05.jsx 파일 작성
+
+```javascript
+import React, { useState } from 'react'
+
+const Comp05 = () => {
+  //let count = 0;
+  const [count, setCount] = useState(100);
+  const onIncrease = () => {
+    setCount(count+1);
+  }
+  const onDecrease = () => {
+    setCount(count-1);
+  }
+  return (
+    <>
+        <h1>state 변수란?</h1>
+        <h2>카운트 : {count}</h2>
+        <div>
+            <button onClick={onDecrease}>감소</button>
+            <button onClick={onIncrease}>증가</button>
+        </div>
+    </>
+  )
+}
+
+export default Comp05
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp05'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+    </div>
+  );
+}
+```
+
+<br><hr><br>
+
+# 3. 이벤트(Event)
+
+## 3-1. onClick 이벤트
+
+src/components/Comp06.jsx 파일 작성
+
+```javascript
+import React, { useState } from 'react'
+
+const Comp06 = () => {
+  const [color, setColor] = useState('#999');
+  return (
+    <div>
+        <h1 style={{background:color, color:'#fff'}}>안녕하세요!</h1>
+        <div>
+            <button onClick={()=>setColor('blue')}>파랑</button>
+            <button onClick={()=>setColor('red')}>빨강</button>
+            <button onClick={()=>setColor('green')}>초록</button>
+        </div>
+    </div>
+  )
+}
+
+export default Comp06
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp06'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+    </div>
+  );
+}
+```
+
+## 3-2. onChange 이벤트
+
+src/components/Comp07.jsx 파일 작성
+
+```javascript
+import React, { useState, useRef } from 'react'
+//이벤트 - onClick(), onChange(), onKeyPress()
+const Comp07 = () => {
+    const [name, setName] = useState("김기태");
+    const [address, setAddress] = useState("서울시 금천구 가산동");
+    const [sel, setSel] = useState("서울");
+    const ref_name = useRef(null);
+
+    const onClick = ()=> {
+        alert('이름:' + name + "\n주소:" + address);
+        setName('');
+        setAddress('');
+        ref_name.current.focus();
+    }
+
+    const onKeyPress = (e) => {
+        if(e.key === 'Enter') {
+            onClick();
+        }
+    }
+  return (
+    <div>
+         <input placeholder='이름을 입력하세요!'
+                value={name}
+                ref={ref_name}
+                onChange={(e)=>setName(e.target.value)} />
+            <hr/>
+            <input placeholder='주소를 입력하세요!' 
+                value={address}
+                onKeyPress={onKeyPress}
+                onChange={(e)=>setAddress(e.target.value)} />
+            <hr/>
+
+            <select onChange={(e)=>setSel(e.target.value)}>
+                <option value="서울">서울</option>
+                <option value="경기">경기</option>
+                <option value="강원">강원</option>
+            </select>
+            
+            <hr />
+
+            <h2>입력된 정보</h2>
+            <ul>
+                <li><span>{name}</span> </li>
+                <li><span>{address}</span></li>
+                <li><span>{sel}</span></li>
+            </ul>
+
+            <button onClick={ onClick }>확인</button>
+    </div>
+  )
+}
+
+export default Comp07
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp07'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+    </div>
+  );
+}
+```
+
+<br><hr><br>
+
+## 3-3. onKeyPress 이벤트
+
+src/components/Products.jsx 파일 작성
+
+```javascript
+import React, { useState } from 'react'
+import Comp08 from './Comp08'
+
+const Products = () => {
+    const [products, setProducts] = useState([
+        {code: 1, name:'오브제 냉장고', price:350},
+        {code: 2, name:'삼성세탁기', price:250},
+        {code: 3, name:'오브제 스타일러', price:150}
+    ]);
+
+    const onInsert = (product) => {
+        setProducts(products.concat(product));
+    }
+    
+    const onDelete = (code)=> {
+        if(window.confirm(code + '번 상품을 삭제하실래요?')) {
+            setProducts(products.filter(p=>p.code !== code))
+        }
+    }
+
+    return (
+        <div>
+            <Comp08 onInsert={onInsert}/>
+            <h2>상품목록</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <td>상품코드</td>
+                        <td>상품이름</td>
+                        <td>상품가격</td>
+                        <td>상품삭제</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    {products.map((p, index)=>
+                        <tr key={index}>
+                            <td>{p.code}</td>
+                            <td>{p.name}</td>
+                            <td>{p.price}</td>
+                            <td><button onClick={()=>onDelete(p.code)}>삭제</button></td>
+                        </tr>
+                    )}
+                </tbody>
+            </table>
+        </div>
+    )
+}
+
+export default Products
+```
+
+<br>
+
+src/components/Comp08.jsx 파일 작성
+
+```javascript
+import React, { useRef, useState } from 'react'
+import Products from './Products'
+
+const Comp08 = ({onInsert}) => {
+    const [form, setForm] = useState({
+        code: 4,
+        name: '냉장고',
+        price: 250
+    });
+
+    const {code, name, price} = form;
+    const ref_name = useRef(null);
+
+    const onChangeForm = (e) => {
+        setForm({
+            ...form,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const onSubmit = (e) => {
+        e.preventDefault();
+        if(window.confirm('저장하실래요?')){
+            setForm({
+                code: code+1,
+                name: '',
+                price: ''
+            });
+            ref_name.current.focus();
+            onInsert(form);
+        }
+    }
+
+    return (
+        <form onSubmit={onSubmit}>
+            <input name='code' placeholder='상품코드'
+                value={code} onChange={onChangeForm}/>
+            <hr/>
+            <input name='name' ref={ref_name} placeholder='상품이름'
+                value={name} onChange={onChangeForm}/>
+            <hr/>
+            <input name='price' placeholder='상품가격'
+                value={price} onChange={onChangeForm}/>
+            <hr/>
+            <button>입력</button>
+            <hr />
+            <fieldset>
+                <legend>입력 정보</legend>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>상품코드</th>
+                            <th>상품이름</th>
+                            <th>상품가격</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span>{code}</span> </td>
+                            <td><span>{name}</span></td>
+                            <td><span>{price}</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </fieldset>
+            <fieldset>
+                <legend>등록된 정보</legend>
+                <Products />
+            </fieldset>
+        </form>
+    )
+}
+
+export default Comp08
+```
+
+<br>
+
+src/App.jsx 파일 편집
+
+```javascript
+import './App.css'
+import CompA from './components/Comp08'
+
+function App() {
+  return (
+    <div className="App">
+      <h1>리액트 시작</h1>
+      <CompA />
+      <hr />
+    </div>
+  );
+}
+```
+
+<br><hr><br>
+
+
+## 3-4. useRef(참조체) = ref
+
+# 4. 컴포넌트 라이프사이클
+
+## 4-1. 
 
 

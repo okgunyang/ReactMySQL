@@ -1,7 +1,7 @@
 import React from 'react'
 import Product from './Product'
 
-const Compo04 = () => {
+const Comp04 = () => {
     const products=[
         {no: '1', name:'새우깡', price:500},
         {no: '2', name:'꿀꽈배기', price:800},
@@ -26,4 +26,4 @@ const Compo04 = () => {
   )
 }
 
-export default Compo04
+export default Comp04
