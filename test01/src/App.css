@@ -1,0 +1,51 @@
+@import url(https://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+@font-face {
+  font-family: 'HakgyoansimWoojuR';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-2@1.0/HakgyoansimWoojuR.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+.App {
+  font-family: 'Noto Sans KR', sans-serif;
+  text-align: center;
+  color:#333;
+}
+
+.App h1 {
+  font-family: 'HakgyoansimWoojuR', sans-serif;
+  font-weight: 800;
+  color:deepskyblue;
+  text-shadow:2px 2px 3px #666;
+}
+
+.App h2 {
+  color:deeppink;
+}
+
+table {
+  width:800px;
+  margin:20px auto;
+  border-collapse: collapse;
+}
+
+th { 
+  border-top:1px solid #333;
+  border-bottom:1px solid #333;
+  background-color: #333;
+  color:#fff;
+}
+
+td { 
+  border-bottom:1px solid #333;
+  padding: 5px 20px;
+}
+
+button {
+  display:inline-block;
+  min-width:100px;
+  text-align: center;
+  padding:10px;
+  margin:10px;
+}
