@@ -754,8 +754,190 @@ function App() {
 
 ## 3-4. useRef(참조체) = ref
 
+<br>
+
+src/components/Products.jsx 파일 편집
+
+```javascript
+import React, { useState } from 'react'
+
+const Products = ({pro, del}) => {
+    console.log(pro);
+  return (
+    <div>
+        <h1>상품목록</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th width={100}>코드</th>
+                    <th width={300}>상품명</th>
+                    <th width={100}>가격</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+                {pro.map(p=>
+                    <tr key={p.code}>
+                        <td>{p.code}</td>
+                        <td>{p.name}</td>
+                        <td>{p.price}</td>
+                        <td><button onClick={()=>del(p.code)}>삭제</button></td>
+                    </tr>
+                    )}
+            </tbody>
+        </table>
+    </div>
+  )
+}
+
+export default Products
+```
+
+<br>
+
+src/components/Comp08.jsx 파일 편집
+
+```javascript
+import React, { useRef, useState } from 'react'
+import Products from './Products';
+
+const Comp08 = () => {
+    const ref_name = useRef(null);  //이름에 포커스
+    const [products, setProducts] = useState([
+        {code:1, name:'냉장고',price:300},
+        {code:2, name:'세탁기',price:250},
+        {code:3, name:'스타일러',price:150},
+    ]);
+
+  const onDelete = (code) => {
+    if(window.confirm(`${code}번 상품을 삭제하실래요?`)){
+      const newProducts = products.filter(p => p.code !== code);
+      setProducts(newProducts);
+    }
+  }  
+
+  const [form, setForm] = useState({
+    'code':4,
+    'name':'냉장고',
+    'price':2500000
+  });
+
+  const onChangeForm = (e) => {
+    setForm({
+        ...form,
+        [e.target.name]:e.target.value
+    })
+  }
+
+  const {code, name, price} = form;
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    if(window.confirm(`${code}:${name}:${price} 등록하실래요?`)){
+        setProducts(products.concat(form));
+        setForm({
+            ...form,
+            code: code+1,
+            name:'',
+            price:200
+        });
+        ref_name.current.focus();
+    }
+  }
+  return (
+    <div>
+      <form onSubmit={onSubmit}>
+        <input name="code" 
+            onChange={onChangeForm} readOnly
+            type="text" placeholder="상품코드" value={code}/> {code}
+        <hr />
+        <input name="name" 
+            onChange={onChangeForm} ref={ref_name} 
+            type="text" placeholder="상품이름" value={name}/> {name}
+        <hr />
+        <input name="price" 
+            onChange={onChangeForm}
+            type="text" placeholder="상품가격" value={price}/> {price}
+        <hr />
+        <input type="submit" value="등록" />
+        <input type="reset" value="취소" />
+      </form>
+      <hr />
+      <Products pro={products} del={onDelete}/>
+    </div>
+  )
+}
+
+export default Comp08
+```
+
+<br>
+
+src/components/Post.jsx 파일 작성
+
+```javascript
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+
+const Post = ({history}) => {
+    const params= useParams();
+    const navigator = useNavigate();
+    const id=params.id;
+    const [post, setPost] = useState('');
+    const [loading, setLoading] = useState(false);
+
+    const callAPI = () => {
+        setLoading(true);
+        fetch('https://jsonplaceholder.typicode.com/posts/' + id)
+        .then(response => response.json())
+        .then(json => {
+            //console.log(json)
+            setPost(json);
+            setLoading(false);
+        });
+    }
+
+    useEffect(()=>{
+        callAPI();
+    }, []);
+
+    if(loading) return <h1>로딩중...</h1>
+    return (
+        <div>
+            <h1>게시글정보</h1>
+            <h3>[{post.id}] {post.title}</h3>
+            <hr/>
+            <div>
+                {post.body}
+            </div>
+            <button onClick={()=>navigator(-1)}>목록으로</button>
+        </div>
+    )
+}
+
+export default Post
+```
+
+<br>
+
+
 # 4. 컴포넌트 라이프사이클
 
-## 4-1. 
+## 4-1. 마운트
+
+## 4-2. 업데이트
+
+## 4-3. 언마운트
+
+# 5. Hooks
+
+## 5-1. useState
+
+## 5-2. useEffect
+
+## 5-3. useRef
+
+
+
 
 
