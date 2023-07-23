@@ -45,6 +45,13 @@ const PostUpdate = () => {
         }
     }
 
+    const onUpdate2 = async() => {
+        if(window.confirm(`${id} 번 게시글을 수정하실래요?`)){
+            await axios.post('/posts/update', form);
+            navigator(-1);
+        }
+    }
+
     if(loading) return <h1 className='my-5 text-center'>로딩 중입니다.......</h1>
     return (
         <div className="container">
